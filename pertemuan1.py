@@ -1,7 +1,3 @@
-import tkinter as tk
-from tkinter import messagebox
-
-# Fungsi Enkripsi
 def enkripsi(plain_text, shift):
     cipher_text = ""
     for char in plain_text:
@@ -18,7 +14,6 @@ def enkripsi(plain_text, shift):
             cipher_text += char
     return cipher_text
 
-# Fungsi Deskripsi
 def deskripsi(cipher_text, shift):
     plain_text = ""
     for char in cipher_text:
@@ -35,58 +30,19 @@ def deskripsi(cipher_text, shift):
             plain_text += char
     return plain_text
 
-# Fungsi untuk Enkripsi dan Menampilkan Hasil
-def encrypt_text():
-    plain_text = input_text.get("1.0", tk.END).strip()
-    try:
-        shift = int(shift_entry.get())
-        if not (1 <= shift <= 25):
-            messagebox.showerror("Error", "Nilai pergeseran harus antara 1 dan 25.")
-            return
-        cipher_text = enkripsi(plain_text, shift)
-        output_text.delete("1.0", tk.END)
-        output_text.insert(tk.END, cipher_text)
-    except ValueError:
-        messagebox.showerror("Error", "Masukkan nilai pergeseran yang valid.")
+# Interface Pengguna
+def main():
+    print("Selamat datang!")
+    plain_text = input("Masukkan teks asli (plain text): ")
+    shift = int(input("Masukkan nilai pergeseran (1-25): "))
 
-# Fungsi untuk Deskripsi dan Menampilkan Hasil
-def decrypt_text():
-    cipher_text = output_text.get("1.0", tk.END).strip()
-    try:
-        shift = int(shift_entry.get())
-        if not (1 <= shift <= 25):
-            messagebox.showerror("Error", "Nilai pergeseran harus antara 1 dan 25.")
-            return
-        plain_text = deskripsi(cipher_text, shift)
-        input_text.delete("1.0", tk.END)
-        input_text.insert(tk.END, plain_text)
-    except ValueError:
-        messagebox.showerror("Error", "Masukkan nilai pergeseran yang valid.")
+    # Panggil fungsi enkripsi
+    cipher_text = enkripsi(plain_text, shift)
+    print("Teks terenkripsi:", cipher_text)
 
-# GUI menggunakan tkinter
-root = tk.Tk()
-root.title("Caesar Cipher")
+    # Panggil fungsi deskripsi
+    deskripsi_text = deskripsi(cipher_text, shift)
+    print("Teks terdekripsi:", deskripsi_text)
 
-# Label dan Input untuk teks asli (Plain Text)
-tk.Label(root, text="Masukkan Teks (Plain Text):").grid(row=0, column=0, padx=10, pady=5)
-input_text = tk.Text(root, height=5, width=40)
-input_text.grid(row=1, column=0, columnspan=2, padx=10, pady=5)
-
-# Label dan Entry untuk pergeseran
-tk.Label(root, text="Masukkan Nilai Pergeseran (1-25):").grid(row=2, column=0, padx=10, pady=5)
-shift_entry = tk.Entry(root)
-shift_entry.grid(row=2, column=1, padx=10, pady=5)
-
-# Tombol Enkripsi dan Deskripsi
-encrypt_button = tk.Button(root, text="Enkripsi", command=encrypt_text)
-encrypt_button.grid(row=3, column=0, padx=10, pady=10)
-
-decrypt_button = tk.Button(root, text="Deskripsi", command=decrypt_text)
-decrypt_button.grid(row=3, column=1, padx=10, pady=10)
-
-# Label dan Output untuk teks terenkripsi (Cipher Text)
-tk.Label(root, text="Teks Terenkripsi/Terdekripsi:").grid(row=4, column=0, padx=10, pady=5)
-output_text = tk.Text(root, height=5, width=40)
-output_text.grid(row=5, column=0, columnspan=2, padx=10, pady=5)
-
-root.mainloop()
+if __name__ == "__main__":
+    main()
